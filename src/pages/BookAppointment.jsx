@@ -3,6 +3,8 @@ import { Calendar, Clock, User, Phone, Mail, FileText } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const BookAppointment = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -25,7 +27,7 @@ const BookAppointment = () => {
     setLoading(true);
 
     try {
-      await axios.post('/api/appointments', formData);
+      await axios.post(`${API_BASE_URL}/appointments`, formData);
       toast.success('Appointment booked successfully! We will contact you soon.');
       setFormData({
         name: '',
@@ -54,7 +56,6 @@ const BookAppointment = () => {
 
   const today = new Date().toISOString().split('T')[0];
 
-  // Function to check if a time slot is in the past
   const isSlotPast = (slot) => {
     if (formData.date !== today) return false;
 
