@@ -26,7 +26,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const response = await axios.post('/api/auth/login', credentials);
+      const response = await axios.post('https://doctor-appointment-backend.up.railway.app/api/auth/login', data);
+
       const { token, admin } = response.data;
       
       localStorage.setItem('adminToken', token);
