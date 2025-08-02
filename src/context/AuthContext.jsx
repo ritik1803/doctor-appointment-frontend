@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const response = await axios.post('https://doctor-appointment-backend.up.railway.app/api/auth/login', data);
+const response = await axios.post('https://doctor-appointment-backend.up.railway.app/api/auth/login', credentials);
 
       const { token, admin } = response.data;
       
