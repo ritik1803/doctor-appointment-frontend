@@ -24,24 +24,31 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = async (credentials) => {
-    try {
-const response = await axios.post('https://doctor-appointment-backend.up.railway.app/api/auth/login', credentials);
+ const login = async (credentials) => {
+  try {
+    const response = await axios.post(
+      'https://doctor-appointment-backend-production-070d.up.railway.app/api/auth/login',
+      credentials,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
-      const { token, admin } = response.data;
-      
-      localStorage.setItem('adminToken', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      setAdmin(admin);
-      
-      return { success: true };
-    } catch (error) {
-      return { 
-        success: false, 
-        error: error.response?.data?.message || 'Login failed' 
-      };
-    }
-  };
+    const { token, admin } = response.data;
+    localStorage.setItem('adminToken', token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    setAdmin(admin);
+    
+    return { success: true };
+  } catch (error) {
+    return { 
+      success: false, 
+      error: error.response?.data?.message || 'Login failed' 
+    };
+  }
+};
 
   const logout = () => {
     localStorage.removeItem('adminToken');
